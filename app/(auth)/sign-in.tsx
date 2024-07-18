@@ -21,7 +21,7 @@ export default function Page() {
             });
             if (signInAttempt.status === 'complete') {
                 await setActive({ session: signInAttempt.createdSessionId });
-                router.replace('/');
+                router.replace('/home');
             }
             else {
                 console.error(JSON.stringify(signInAttempt, null, 2));
