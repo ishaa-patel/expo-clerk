@@ -39,7 +39,7 @@ if (!publishableKey) {
 }
 
 const IntialLayout = () => {
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isSignedIn } = useAuth();
   const segments = useSegments();
   const router = useRouter();
 
