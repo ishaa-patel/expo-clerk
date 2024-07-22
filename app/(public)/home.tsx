@@ -1,18 +1,16 @@
-import { SignedIn, useAuth, useUser } from "@clerk/clerk-expo";
-import { Button, Text, View, StyleSheet } from "react-native";
+import { SignedIn, useUser } from "@clerk/clerk-expo";
+import { Text, View, StyleSheet, Image } from "react-native";
 
 export default function Page() {
-    const { signOut } = useAuth();
     const { user } = useUser();
-    const doLogOut = () => {
-        signOut();
-    }
     return (
         <View style={styles.container}>
+            {console.log("User details:", user)}
             <SignedIn>
-                <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
+                <Image source={{ uri: user?.externalAccounts[0].imageUrl }} style={styles.userImage} />
+                <Text>Hello {user?.fullName}</Text>
+                <Text>Email: {user?.emailAddresses[0].emailAddress}</Text>
             </SignedIn>
-            <Button title="Sign-Out" onPress={doLogOut} />
         </View>
     );
 }
@@ -22,5 +20,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    userImage: {
+        height: 100,
+        width: 100,
+        borderRadius: 50,
+        marginBottom: 10,
     }
 })

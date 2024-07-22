@@ -75,6 +75,7 @@ export default function SignUpScreen() {
                         placeholder="Code"
                         placeholderTextColor='gray'
                         onChangeText={(code) => setCode(code)}
+                        style={styles.textInput}
                     />
                     <Button title="Verify Email" onPress={onPressVerify} />
                 </>

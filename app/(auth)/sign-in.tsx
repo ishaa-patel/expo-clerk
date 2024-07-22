@@ -2,6 +2,7 @@ import { useSignIn } from "@clerk/clerk-expo";
 import { Link, useRouter } from 'expo-router';
 import { Text, TextInput, Button, View, StyleSheet } from "react-native";
 import React from "react";
+import SignInWithOAuth from "@/components/SignInWithOAuth";
 
 export default function Page() {
     const { signIn, setActive, isLoaded } = useSignIn();
@@ -9,7 +10,6 @@ export default function Page() {
 
     const [emailAddress, setEmailAddress] = React.useState("");
     const [password, setPassword] = React.useState("");
-
     const onSignInPress = React.useCallback(async () => {
         if (!isLoaded) {
             return;
@@ -56,6 +56,7 @@ export default function Page() {
                     <Text style={styles.signUpTxt}>Sign up</Text>
                 </Link>
             </View>
+            <SignInWithOAuth />
         </View>
     );
 }
