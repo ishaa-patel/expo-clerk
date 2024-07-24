@@ -4,14 +4,14 @@ import { Text, View, StyleSheet, Image } from "react-native";
 export default function Page() {
     const { user } = useUser();
     return (
-        <View style={styles.container}>
-            {console.log("User details:", user)}
-            <SignedIn>
-                <Image source={{ uri: user?.externalAccounts[0].imageUrl }} style={styles.userImage} />
+        <SignedIn>
+            <View style={styles.container}>
+                <>{console.log("User details:", user)}</>
+                {/* <Image source={{ uri: user?.externalAccounts[0].imageUrl }} style={styles.userImage} /> */}
                 <Text>Hello {user?.fullName}</Text>
                 <Text>Email: {user?.emailAddresses[0].emailAddress}</Text>
-            </SignedIn>
-        </View>
+            </View>
+        </SignedIn >
     );
 }
 
