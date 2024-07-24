@@ -8,6 +8,7 @@ export default function Page() {
     const { signIn, setActive, isLoaded } = useSignIn();
     const router = useRouter();
 
+    const [phoneNumber, setPhoneNumber] = React.useState("");
     const [emailAddress, setEmailAddress] = React.useState("");
     const [password, setPassword] = React.useState("");
     const onSignInPress = React.useCallback(async () => {
@@ -16,7 +17,7 @@ export default function Page() {
         }
         try {
             const signInAttempt = await signIn.create({
-                identifier: emailAddress,
+                identifier: phoneNumber,
                 password,
             });
             if (signInAttempt.status === 'complete') {
@@ -30,15 +31,15 @@ export default function Page() {
         catch (err: any) {
             console.error(JSON.stringify(err, null, 2));
         }
-    }, [isLoaded, emailAddress, password]);
+    }, [isLoaded, phoneNumber, password]);
     return (
         <View style={styles.container}>
             <TextInput
                 autoCapitalize="none"
-                value={emailAddress}
-                placeholder="Email"
+                value={phoneNumber}
+                placeholder="Phone"
                 placeholderTextColor="gray"
-                onChangeText={(email) => setEmailAddress(email)}
+                onChangeText={(phone) => setPhoneNumber(phone)}
                 style={styles.textInput}
             />
             <TextInput

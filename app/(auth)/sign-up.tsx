@@ -7,6 +7,7 @@ export default function SignUpScreen() {
     const { isLoaded, signUp, setActive } = useSignUp();
     const router = useRouter();
 
+    const [phoneNumber, setPhoneNumber] = React.useState("");
     const [emailAddress, setEmailAddress] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [pendingVerification, setPendingVerification] = React.useState(false);
@@ -17,9 +18,9 @@ export default function SignUpScreen() {
             return;
         }
         try {
-            await signUp.create({ emailAddress, password });
+            await signUp.create({ emailAddress, password, phoneNumber });
 
-            await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
+            await signUp.preparePhoneNumberVerification({ strategy: 'phone_code' })
             setPendingVerification(true);
         }
         catch (err: any) {
@@ -32,23 +33,31 @@ export default function SignUpScreen() {
             return;
         }
         try {
-            const completeSignUp = await signUp.attemptEmailAddressVerification({ code });
+            const completeSignUp = await signUp.attemptPhoneNumberVerification({ code });
             if (completeSignUp.status === 'complete') {
                 await setActive({ session: completeSignUp.createdSessionId });
-                router.replace('/');
+                router.replace('/home');
             }
             else {
                 console.error(JSON.stringify(completeSignUp, null, 2));
             }
         }
         catch (err: any) {
-            console.error(JSON.stringify(err, null, 2));
+            console.error("catch-error:", JSON.stringify(err, null, 2));
         }
     };
     return (
         <View style={styles.container}>
             {!pendingVerification && (
                 <>
+                    <TextInput
+                        autoCapitalize="none"
+                        value={phoneNumber}
+                        placeholder="Phone"
+                        placeholderTextColor='gray'
+                        onChangeText={(phone) => setPhoneNumber(phone)}
+                        style={styles.textInput}
+                    />
                     <TextInput
                         autoCapitalize="none"
                         value={emailAddress}
@@ -77,7 +86,7 @@ export default function SignUpScreen() {
                         onChangeText={(code) => setCode(code)}
                         style={styles.textInput}
                     />
-                    <Button title="Verify Email" onPress={onPressVerify} />
+                    <Button title="Verify Code" onPress={onPressVerify} />
                 </>
             )}
         </View>
