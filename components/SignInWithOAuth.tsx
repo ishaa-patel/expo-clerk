@@ -17,7 +17,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 const SignInWithOAuth = () => {
     useWarmUpBrowser();
-    const { startOAuthFlow } = useOAuth({ strategy: 'oauth_google' });
+    const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
     const onPress = React.useCallback(async () => {
         try {
             const { createSessionId, signIn, signUp, setActive } =
@@ -27,7 +27,7 @@ const SignInWithOAuth = () => {
             }
         }
         catch (err) {
-            console.error("OAuth Error", err);
+            console.error("OAuth Error", JSON.stringify(err, null, 2));
         }
     }, []);
     return (
