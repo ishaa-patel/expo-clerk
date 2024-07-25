@@ -1,23 +1,26 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from "expo-router/tabs";
+import { router } from 'expo-router';
+import { Stack } from "expo-router/stack";
+import { Button } from 'react-native';
 
 export default function Layout() {
     return (
-        <Tabs screenOptions={{ tabBarActiveTintColor: '#4895EF' }}>
-            <Tabs.Screen
+        <Stack>
+            <Stack.Screen
                 name="home"
                 options={{
                     title: 'Home',
-                    tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />
+                    headerRight: () => (
+                        <FontAwesome name='sign-out' size={24} onPress={() => { router.navigate('/profile') }} />
+                    )
                 }}
             />
-            <Tabs.Screen
+            <Stack.Screen
                 name="profile"
                 options={{
                     title: 'Profile',
-                    tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color} />
                 }}
             />
-        </Tabs>
+        </Stack>
     )
 }

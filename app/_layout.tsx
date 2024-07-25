@@ -1,7 +1,9 @@
 import * as SecureStore from 'expo-secure-store';
 import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import { Slot, useRouter, useSegments } from "expo-router";
+import { Stack, useRouter, useSegments } from "expo-router";
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { useEffect } from 'react';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 
 const tokenCache = {
   async getToken(key: string) {
@@ -39,6 +41,7 @@ if (!publishableKey) {
 }
 
 const IntialLayout = () => {
+  const colorScheme = useColorScheme();
   const { isSignedIn } = useAuth();
   const segments = useSegments();
   const router = useRouter();
@@ -55,7 +58,15 @@ const IntialLayout = () => {
     }
   }, [isSignedIn]);
 
-  return <Slot />
+  return (
+    <ThemeProvider value={colorScheme === 'light' ? DarkTheme : DefaultTheme}>
+      <Stack screenOptions={{ headerShown: false }} >
+        <Stack.Screen name='(auth)' />
+        <Stack.Screen name="(public)" />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+    </ThemeProvider>
+  )
 }
 const RootLayout = () => {
   return (
