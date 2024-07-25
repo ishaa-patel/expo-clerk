@@ -17,11 +17,14 @@ WebBrowser.maybeCompleteAuthSession();
 
 const SignInWithOAuth = () => {
     useWarmUpBrowser();
+    const redirectUrl = Linking.createURL('app/(public)', { scheme: 'myapp' });
+    console.log(redirectUrl); // Debugging URL
     const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
     const onPress = React.useCallback(async () => {
         try {
             const { createSessionId, signIn, signUp, setActive } =
-                await startOAuthFlow({ redirectUrl: Linking.createURL("/home", { scheme: "myapp" }) });
+
+                await startOAuthFlow({ redirectUrl: redirectUrl });
             if (createSessionId) {
                 setActive!({ session: createSessionId });
             }
