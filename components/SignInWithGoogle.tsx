@@ -3,6 +3,7 @@ import * as WebBrowser from "expo-web-browser";
 import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
+import { styles } from "./styles/CustomLoginStyles";
 
 export const useWarmUpBrowser = () => {
     React.useEffect(() => {
@@ -15,7 +16,7 @@ export const useWarmUpBrowser = () => {
 
 WebBrowser.maybeCompleteAuthSession();
 
-const SignInWithOAuth = () => {
+export const SignInGoogle = () => {
     useWarmUpBrowser();
     const redirectUrl = Linking.createURL('app/(public)', { scheme: 'myapp' });
     console.log(redirectUrl); // Debugging URL
@@ -35,25 +36,10 @@ const SignInWithOAuth = () => {
     }, []);
     return (
         <View>
-            <TouchableOpacity style={styles.googleLogin} onPress={onPress}>
+            <TouchableOpacity style={styles.customLogin} onPress={onPress}>
                 <Image source={require('@/assets/images/google.png')} style={styles.logo} />
             </TouchableOpacity>
         </View>
     )
 }
-export default SignInWithOAuth;
 
-const styles = StyleSheet.create({
-    googleLogin: {
-        marginTop: 20,
-        borderColor: '#ddd',
-        borderWidth: 2,
-        borderRadius: 30,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-    },
-    logo: {
-        height: 40,
-        width: 40,
-    }
-})
